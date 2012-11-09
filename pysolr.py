@@ -305,6 +305,9 @@ class Solr(object):
         self.url = url
         self.scheme, netloc, path, query, fragment = urlsplit(url)
         self.base_url = urlunsplit((self.scheme, netloc, '', '', ''))
+        if '@' in netloc:
+            credentials, netloc = netloc.split('@')
+            self.auth = tuple(credentials.split(':'))
         netloc = netloc.split(':')
         self.host = netloc[0]
         if len(netloc) == 1:
